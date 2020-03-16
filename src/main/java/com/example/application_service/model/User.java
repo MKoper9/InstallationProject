@@ -1,7 +1,6 @@
-package com.example.model;
+package com.example.application_service.model;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

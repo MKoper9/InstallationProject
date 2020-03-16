@@ -1,4 +1,5 @@
-package com.example.model;
+package com.example.application_service.model;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,15 +14,16 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Radiator {
+public class Producer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long radiatorId;
+    private Long producerId;
     private String name;
-    private Double heatingPower;
-    private Material material;
-    private Producer producer;
+    private String country;
 
-
+    public Producer(String name, String country) {
+        this.name = name;
+        this.country = country;
+    }
 }
