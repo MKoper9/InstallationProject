@@ -135,20 +135,20 @@ public class UserService {
     }
 
     public void findAllEmailAndRoleName() {
-        userRepository
+        userRepository.findAllEmailAndRoleName().forEach(o -> System.out.println(o[0]+" : "+o[1]));
     }
 
     public void changeStatusToUser(Boolean status) {
-
+        userRepository.changeStatusToUsers(status);
     }
 
     public void deleteAllRoleNamesFromUser(String roleName) {
 
     }
 
-    public User getUserByEmail(String loggedEmail) {
-
-    }
+//    public User getUserByEmail(String loggedEmail) {
+//
+//    }
 
 //    public Boolean hasRole(Authenticator auth, String roleName){}
 
