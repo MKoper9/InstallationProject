@@ -23,41 +23,42 @@ public class User {
     @Id
     @GeneratedValue
     private Long userId;
-    @NotBlank(message = "pole obowiązkowe")
-    @Size(min = 3, max = 255, message = "imię musi zawierać od {min} do {max} znaków")
+//    @NotBlank(message = "pole obowiązkowe")
+//    @Size(min = 3, max = 255, message = "imię musi zawierać od {min} do {max} znaków")
     private String name;
-    @NotBlank(message = "pole obowiązkowe")
-    @Size(min = 3, max = 255, message = "nazwisko musi zawierać od {min} do {max} znaków")
+//    @NotBlank(message = "pole obowiązkowe")
+//    @Size(min = 3, max = 255, message = "nazwisko musi zawierać od {min} do {max} znaków")
     private String lastName;
-    @NotBlank(message = "pole obowiązkowe")
-    @Email(message = "niepoprawny adres e-mail")
+//    @NotBlank(message = "pole obowiązkowe")
+//    @Email(message = "niepoprawny adres e-mail")
     private String email;
-    @NotBlank(message = "pole obowiązkowe")
-    @Size(min = 6, max = 255, message = "hasło musi zawierać od {min} do {max} znaków")
+//    @NotBlank(message = "pole obowiązkowe")
+//    @Size(min = 6, max = 255, message = "hasło musi zawierać od {min} do {max} znaków")
     private String password;
     private String companyName;
     private String companyAddress;
-    @Size(min = 10, max = 10, message = "nip musi zawierać {min} znaków")
+//    @Size(min = 10, max = 10, message = "nip musi zawierać {min} znaków")
     private String companyNip;
     private Boolean status;
     private LocalDateTime registrationDate;
-    private List<Radiator> radiators;
+//    private List<Radiator> radiators;
+
 
 
     //user
     public User(String name, String lastName, String email,
-                String password, LocalDateTime registrationDate,Boolean status, List<Radiator> radiators) {
+                String password, LocalDateTime registrationDate,Boolean status) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.status = status;
-        this.radiators = radiators;
+//        this.radiators = radiators;
         this.registrationDate=registrationDate;
     }
 //company
     public User(String name, String lastName, String email,
-                String password, String companyName, String companyAddress, String companyNip, Boolean status, LocalDateTime registrationDate, List<Radiator> radiators) {
+                String password, String companyName, String companyAddress, String companyNip, Boolean status, LocalDateTime registrationDate) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -67,6 +68,6 @@ public class User {
         this.companyNip = companyNip;
         this.status = status;
         this.registrationDate = registrationDate;
-        this.radiators = radiators;
+//        this.radiators = radiators;
     }
 }

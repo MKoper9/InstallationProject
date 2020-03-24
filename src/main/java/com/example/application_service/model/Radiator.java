@@ -17,6 +17,13 @@ public class Radiator {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "radiator_id")
     private Long radiatorId;
+    @Column(name = "radiator_name")
     private String radiatorName;
+    @Column(name = "heating_power")
     private Double heatingPower;
+
+    public Radiator(String radiatorName, Double heatingPower) {
+        this.radiatorName = radiatorName;
+        this.heatingPower = heatingPower;
+    }
 }
