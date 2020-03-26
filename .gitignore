@@ -3,6 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+startbootstrap-clean-blog-gh-pages/
 
 ### STS ###
 .apt_generated
