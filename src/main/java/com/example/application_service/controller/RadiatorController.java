@@ -18,16 +18,24 @@ public class RadiatorController {
     }
 
     @PostMapping(path = "/addRadiator")
-    public Boolean addRadiator(@RequestParam(defaultValue = "test") String radiatorName, @RequestParam(defaultValue = "") Double heatingPower){
-        return radiatorService.addRadiator(new Radiator(radiatorName,heatingPower));
+    public Boolean addRadiator(@RequestParam(defaultValue = "test") String radiatorName, @RequestParam(defaultValue = "") Integer heatingPower) {
+        return radiatorService.addRadiator(new Radiator(radiatorName, heatingPower));
     }
+
     @GetMapping(path = "/radiators")
-    public List<Radiator> getAllRadiators(){
+    public List<Radiator> getAllRadiators() {
         return radiatorService.getAllRadiators();
     }
-    @DeleteMapping("/deleteradiator/id{radiator_id}")
-    public Boolean deleteRadiatorById(@PathVariable("radiator_id") Long radiatorId){
+
+    @DeleteMapping("/deleteRadiator")
+    public Boolean deleteRadiatorById(@RequestParam Long radiatorId) {
         return radiatorService.deleteRadiatorById(radiatorId);
     }
+
+    @PutMapping("/updateRadiator")
+    public Boolean updateRadiator(@RequestParam Long radiatorId, String radiatorName, Integer heatingPower){
+        return radiatorService.updateRadiator(radiatorId,radiatorName,heatingPower);
+    }
+
 
 }
