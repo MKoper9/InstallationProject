@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Clean Blog - Start Bootstrap Theme</title>
+  <title>Rejestracja</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -26,46 +26,10 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">Start Bootstrap</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../../../../startbootstrap-clean-blog-gh-pages/about.html">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../../../../startbootstrap-clean-blog-gh-pages/post.html">Sample Post</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../../../../startbootstrap-clean-blog-gh-pages/contact.html">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
+  <!--fragmentss-->
+  <nav th:replace="fragments/navbar :: navbar"></nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../static/img/home-bg.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>REJESTRACJA</h1>
-            <span class="subheading">ZARAJESTRUJ SIĘ JAKO OSOBA PRYWATNA LUB FIRMA</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+  <header th:replace="fragments/header :: header(title='REJESTRACJA', subtitle='możesz się zarejestrować jako firma lub osoba prywatna')"></header>
 
   <!-- Main Content -->
   <div class="container">
@@ -76,15 +40,22 @@
         <hr>
         <form th:action="@{/registration}" th:method="post" th:object="${user}">
           <div class="form-group">
+            <p th:errors="*{name}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{name}" th:type="text" th:placeholder="imię" class="form-control"></br>
-            <p th:errors="*{name}"></p>
+            <p th:errors="*{lastName}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{lastName}" th:type="text" th:placeholder="nazwisko" class="form-control"></br>
-            <p th:errors="*{lastName}"></p>
+            <p th:if="${isUniqueEmail !=null}" th:text="$isUniqueEmail" style="font-size: 10px" class="alert alert-danger"></p>
+            <p th:errors="*{email}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{email}" th:type="email" th:placeholder="e-mail" class="form-control"></br>
+            <p th:errors="*{password}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{password}" th:type="password" th:placeholder="hasło" class="form-control"></br>
+            <p th:errors="*{companyName}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{companyName}" th:type="text" th:placeholder="nazwa firmy - pole nieobowiązkowe" class="form-control"></br>
+            <p th:errors="*{companyAddress}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{companyAddress}" th:type="text" th:placeholder="adres firmy - pole nieobowiązkowe" class="form-control"></br>
+            <p th:errors="*{companyNip}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{companyNip}" th:type="text" th:placeholder="nip firmy - pole nieobowiązkowe" class="form-control"></br>
+
             <input th:type="submit" value="zarejestruj" class="btn btn-primary mt-2 float-center">
           </div>
         </form>

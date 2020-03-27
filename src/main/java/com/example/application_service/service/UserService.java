@@ -1,5 +1,6 @@
 package com.example.application_service.service;
 
+import com.example.application_service.model.Role;
 import com.example.application_service.model.User;
 import com.example.application_service.repository.RadiatorRepository;
 import com.example.application_service.repository.RoleRepository;
@@ -7,9 +8,11 @@ import com.example.application_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -74,69 +77,65 @@ public class UserService {
         }
         return false;
     }
-//
-//    public Boolean updateUserById(Long userId, String name, String lastName, String email, String password,
-//                                  String companyName, String companyAddress, String companyNip) {
-//        Optional<User> userOpt = userRepository.findById(userId);
-//        if (userOpt.isPresent()) {
-//            User user = userOpt.get();
-//            if (userRepository.findUserByEmail(email) == null) {
-//                user.setName(name != null ? name : user.getName());
-//                user.setLastName(lastName != null ? lastName : user.getLastName());
-//                user.setEmail(email != null ? email : user.getEmail());
-//                user.setPassword(password != null ? password : user.getPassword());
-//                user.setCompanyName(companyName != null && user.getCompanyName() != null ? companyName : user.getCompanyName());
-//                user.setCompanyAddress(companyAddress != null && user.getCompanyAddress() != null ? companyAddress : user.getCompanyAddress());
-//                user.setCompanyNip(companyNip != null && user.getCompanyNip() != null ? companyNip : user.getCompanyAddress());
-//                userRepository.save(user);
-//                return true;
-//            }
-//            return false;
-//        }
-//        return false;
-//    }
-//
-//    public Boolean addRoleToUser(Long userId, String roleName) {
-//        Optional<User> userOpt = userRepository.findById(userId);
-//        if (userOpt.isPresent()) {
-//            User user = userOpt.get();
-//            Role role = roleRepository.findFirstByRoleName(roleName);
-//            if (role == null) return false;
-//            Set<Role> roles = user.getRoles();
-//            roles.add(role);
-//            user.setRoles(roles);
-//            userRepository.save(user);
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public Boolean removeRoleFromUser(String roleName, Long userId) {
-//        Optional<User> userOpt = userRepository.findById(userId);
-//        if(userOpt.isPresent()){
-//            User user = userOpt.get();
-//            Role role = roleRepository.findFirstByRoleName(roleName);
-//            if(role==null)return false;
-//            Set<Role>roles = user.getRoles();
-//            roles.remove(role);
-//            user.setRoles(roles);
-//            userRepository.save(user);
-//            return true;
-//        }
-//        return false;
-//    }
 
-//    public void findAllEmailAndRoleName() {
-//        userRepository.findAllEmailAndRoleName().forEach(o -> System.out.println(o[0]+" : "+o[1]));
-//    }
-//
-//    public void changeStatusToUser(Boolean status) {
-//        userRepository.changeStatusToUsers(status);
-//    }
+    public Boolean updateUserById(Long userId, String name, String lastName, String email, String password,
+                                  String companyName, String companyAddress, String companyNip) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            if (userRepository.findUserByEmail(email) == null) {
+                user.setName(name != null ? name : user.getName());
+                user.setLastName(lastName != null ? lastName : user.getLastName());
+                user.setEmail(email != null ? email : user.getEmail());
+                user.setPassword(password != null ? password : user.getPassword());
+                user.setCompanyName(companyName != null && user.getCompanyName() != null ? companyName : user.getCompanyName());
+                user.setCompanyAddress(companyAddress != null && user.getCompanyAddress() != null ? companyAddress : user.getCompanyAddress());
+                user.setCompanyNip(companyNip != null && user.getCompanyNip() != null ? companyNip : user.getCompanyAddress());
+                userRepository.save(user);
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
 
-//    public void deleteAllRoleNamesFromUser(String roleName) {
-//
-//    }
+    public Boolean addRoleToUser(Long userId, String roleName) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            Role role = roleRepository.findFirstByRoleName(roleName);
+            if (role == null) return false;
+            Set<Role> roles = user.getRoles();
+            roles.add(role);
+            user.setRoles(roles);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean removeRoleFromUser(String roleName, Long userId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if(userOpt.isPresent()){
+            User user = userOpt.get();
+            Role role = roleRepository.findFirstByRoleName(roleName);
+            if(role==null)return false;
+            Set<Role>roles = user.getRoles();
+            roles.remove(role);
+            user.setRoles(roles);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+    public void findAllEmailAndRoleName() {
+        userRepository.findAllEmailAndRoleName().forEach(o -> System.out.println(o[0]+" : "+o[1]));
+    }
+
+    public void changeStatusToUser(Boolean status) {
+        userRepository.changeStatusToUsers(status);
+    }
 
     public User getUserByEmail(String loggedEmail) {
         User user = userRepository.findUserByEmail(loggedEmail);

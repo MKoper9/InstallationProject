@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@RequestMapping("/rest")
 @RestController
 public class UserController {
     private UserService userService;
@@ -34,7 +35,7 @@ public class UserController {
         return userService.deleteUser(userEmail);
     }
 
-    @PutMapping(path = "/updateUserStatus")
+    @PutMapping("/updateUserStatus")
     public Boolean updateStatus(@RequestParam Long userId, @RequestParam Boolean status) {
         return userService.updateStatus(userId, status);
     }

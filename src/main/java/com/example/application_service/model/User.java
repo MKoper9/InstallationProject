@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -30,7 +31,7 @@ public class User {
 //    @Size(min = 3, max = 255, message = "nazwisko musi zawierać od {min} do {max} znaków")
     private String lastName;
 //    @NotBlank(message = "pole obowiązkowe")
-//    @Email(message = "niepoprawny adres e-mail")
+    @Email(message = "niepoprawny adres e-mail")
     private String email;
 //    @NotBlank(message = "pole obowiązkowe")
 //    @Size(min = 6, max = 255, message = "hasło musi zawierać od {min} do {max} znaków")
@@ -41,7 +42,23 @@ public class User {
     private String companyNip;
     private Boolean status;
     private LocalDateTime registrationDate;
-//    private List<Radiator> radiators;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role>roles;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_radiator",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "radiator_id")
+    )
+    private List<Radiator> radiators;
+
 
 
 

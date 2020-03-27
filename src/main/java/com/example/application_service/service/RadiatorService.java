@@ -31,7 +31,6 @@ public class RadiatorService {
         if (radiatorRepository.findAll().stream().anyMatch(r -> r.getRadiatorName().equals(radiator.getRadiatorName()))) {
             return false;
         }
-        ;
         radiatorRepository.save(radiator);
         return true;
     }
@@ -57,4 +56,14 @@ public class RadiatorService {
         return false;
     }
 
+    public Boolean updateRadiator(Long radiatorId, String radiatorName, Integer heatingPower) {
+        Optional<Radiator> radiatorOpt = radiatorRepository.findById(radiatorId);
+        if (radiatorOpt.isPresent()) {
+            Radiator radiator = radiatorOpt.get();
+            radiator.setRadiatorName(radiatorName != null ? radiatorName : radiator.getRadiatorName());
+            radiator.setHeatingPower(heatingPower != null ? heatingPower : radiator.getHeatingPower());
+            radiatorRepository.save(radiator);
+        }
+        return false;
+    }
 }

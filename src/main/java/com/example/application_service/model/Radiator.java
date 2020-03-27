@@ -20,10 +20,14 @@ public class Radiator {
     @Column(name = "radiator_name")
     private String radiatorName;
     @Column(name = "heating_power")
-    private Double heatingPower;
+    private Integer heatingPower;
 
-    public Radiator(String radiatorName, Double heatingPower) {
+    public Radiator(String radiatorName, Integer heatingPower) {
+        if(heatingPower>0){
         this.radiatorName = radiatorName;
         this.heatingPower = heatingPower;
+        }else {
+            throw new IllegalArgumentException("heating power must over than 0");
+        }
     }
 }
