@@ -6,6 +6,8 @@ import com.example.application_service.repository.RadiatorRepository;
 import com.example.application_service.repository.RoleRepository;
 import com.example.application_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -145,6 +147,12 @@ public class UserService {
         throw new NoSuchElementException("Brak elementu w zbiorze");
     }
 
-//    public Boolean hasRole(Authenticator auth, String roleName){}
+    public Boolean hasRole(Authentication auth, String roleName){
+        if(auth==null){
+            return false;
+        }
+        UserDetails principal = (UserDetails)auth.getPrincipal();
+        return principal.getAuthorities().stream().anyMatch(o -> o.getAuthority().equals(roleName));
+    }
 
 }

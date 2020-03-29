@@ -27,6 +27,16 @@ public class UserFrontEndController {
         this.radiatorService = radiatorService;
     }
 
+    /*
+    "Model"
+    Simply put, the model can supply attributes used for rendering views.
+    To provide a view with usable data, we simply add this data to its Model object.
+    Additionally, maps with attributes can be merged with Model instances:
+
+    "Authentication"
+    Represents the token for an authentication request or for an authenticated principal
+    once the request has been processed by the AuthenticationManager.authenticate(Authentication) method.
+     */
     @GetMapping("/login")
     public String login(Authentication auth, Model model) {
         model.addAttribute("isLogged", auth != null);
@@ -38,6 +48,10 @@ public class UserFrontEndController {
     public String index(Authentication auth, Model model) {
         model.addAttribute("isLogged", auth != null);
         model.addAttribute("radiator", radiatorService.getAllRadiatorsOrderByPublicationDateDesc());
+        model.addAttribute("isAdmin", userService.hasRole(auth, "ROLE_ADMIN"));
+        model.addAttribute("isCompany", userService.hasRole(auth, "ROLE_COMPANY"));
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");
+
         return "index";
     }
 
@@ -47,7 +61,12 @@ public class UserFrontEndController {
         model.addAttribute("user", new User()); // give to Thymeleaf resolver object User
         return "registration";
     }
-
+    /*
+    "BindingResult"
+    General interface that represents binding results.
+    Extends the interface for error registration capabilities, allowing for
+    a Validator to be applied, and adds binding-specific analysis and model building.
+     */
     @PostMapping("/registration")
     public String registration(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {

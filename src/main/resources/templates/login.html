@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Rejestracja</title>
+  <title>Zaloguj się</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -26,7 +26,7 @@
 <body>
 
   <!-- Navigation -->
-  <!--coś zaimportujemy-->
+  <!-- import -->
   <nav th:replace="fragments/navbar :: navbar"></nav>
   <!-- Page Header -->
   <header th:replace="fragments/header :: header(title='LOGOWANIE', subtitle='zaloguj się')"></header>
@@ -37,7 +37,7 @@
         <!--formularz-->
         <h1> Formularz logowania</h1>
         <hr>
-        <form th:action="@{/login-process}" th:method="post">
+        <form th:action="@{/login}" th:method="post">
           <div class="form-group">
             <input th:name="email" th:type="email" th:placeholder="e-mail" class="form-control"></br>
             <input th:name="password" th:type="password" th:placeholder="hasło" class="form-control"></br>

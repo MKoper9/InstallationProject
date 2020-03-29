@@ -38,14 +38,15 @@
   <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto">
       <h1> Kliknij na zlecenie aby je zamówić </h1>
+<!--      <form th:action="@{/index}" th:method="get" th:object="${user}">-->
       <p th:if="${info != null}" th:text="${info}" class="alert-info"> info </p>
-      <div class="post-preview" th:each="task : ${tasks}">
-        <div th:if="${task.getStatus()}">
-          <a th:href="@{'tasks&'+${task.getTaskId()}}">
-            <h2 class="post-title" th:text="${task.getContent()}">
+      <div class="post-preview" th:each="radiator : ${radiators}">
+        <div th:if="${radiator.getStatus()}">
+          <a th:href="@{'radiators&'+${radiator.getRadiatorId()}}">
+            <h2 class="post-title" th:text="${radiator.getContent()}">
               content
             </h2>
-            <h3 class="post-subtitle" th:text="${#numbers.formatDecimal(task.getPrice(),1,2)}+' PLN'">
+            <h3 class="post-subtitle" th:text="${#numbers.formatDecimal(radiator.getPrice(),1,2)}+' PLN'">
               price
             </h3>
           </a>
@@ -62,6 +63,7 @@
           <hr>
         </div>
       </div>
+<!--      </form>-->
     </div>
   </div>
 </div>
@@ -99,7 +101,7 @@
             </a>
           </li>
         </ul>
-        <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
+        <p class="copyright text-muted">Copyright &copy; My Website 2020</p>
       </div>
     </div>
   </div>
