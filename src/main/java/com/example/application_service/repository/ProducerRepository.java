@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface ProducerRepository extends JpaRepository<Producer, Long> {
 
     void deleteByProducerName(String producerName);
-
 }
