@@ -18,6 +18,7 @@ import java.net.URI;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.web.servlet.function.RequestPredicates.contentType;
 
 @SpringBootTest
@@ -30,8 +31,6 @@ class RadiatorControllerTest {
     RadiatorService radiatorService;
     @Autowired
     RadiatorController radiatorController;
-
-    ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private MockMvc mockMvc;

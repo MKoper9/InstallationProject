@@ -21,13 +21,27 @@ public class Radiator {
     private String radiatorName;
     @Column(name = "heating_power")
     private Integer heatingPower;
+    @Column(name="height")
+    private Double height;
+    @Column(name = "lenght")
+    private Double lenght;
 
-    public Radiator(String radiatorName, Integer heatingPower) {
-        if(heatingPower>0){
+    public Radiator(String radiatorName, Integer heatingPower, Double height, Double lenght) {
         this.radiatorName = radiatorName;
-        this.heatingPower = heatingPower;
+        if(height>0){
+            this.height=height;
         }else {
-            throw new IllegalArgumentException("heating power must over than 0");
+            throw new IllegalArgumentException("height must be over than 0");
+        }
+        if(lenght>0){
+            this.height=height;
+        }else {
+            throw new IllegalArgumentException("lenght must be over than 0");
+        }
+        if(heatingPower>0){
+            this.heatingPower = heatingPower;
+        }else {
+            throw new IllegalArgumentException("heating power must be over than 0");
         }
     }
 }
