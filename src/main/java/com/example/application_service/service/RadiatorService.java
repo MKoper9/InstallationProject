@@ -66,4 +66,10 @@ public class RadiatorService {
         }
         return false;
     }
+
+
+    public List<Radiator> findRadiatorByHeatingPower(Integer higherPower, Integer lowerPower) {
+        List<Radiator> radiatorOpt = radiatorRepository.findRadiatorByHeatingPowerBetween(higherPower,lowerPower);
+        return radiatorOpt;
+    }
 }

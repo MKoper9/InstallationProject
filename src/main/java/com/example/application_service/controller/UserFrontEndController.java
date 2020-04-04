@@ -1,5 +1,6 @@
 package com.example.application_service.controller;
 
+import com.example.application_service.model.Radiator;
 import com.example.application_service.model.User;
 import com.example.application_service.service.RadiatorService;
 import com.example.application_service.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class UserFrontEndController {
@@ -79,5 +81,13 @@ public class UserFrontEndController {
             return "registration";
         }
         return "index";
+    }
+
+    @GetMapping("/calculator/getRadiators")
+    public String calculator(Integer flowTemperature, Integer returnTemperature, Model model){
+
+        model.addAttribute("radiators", radiatorService.findRadiatorByHeatingPower(flowTemperature,returnTemperature));
+
+        return "calculator";
     }
 }

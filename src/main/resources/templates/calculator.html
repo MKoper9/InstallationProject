@@ -38,17 +38,28 @@
         <h1>FORMULARZ REJESTRACJI</h1>
         <hr>
 
-        <form th:action="@{/calculator}" th:method="post" th:object="${user}">
-          <div class="form-group">
-            <p th:errors="*{flowTemp}" style="font-size: 10px" class="alert alert-danger"></p>
-            <input th:field="*{flowTemp}" th:type="text" th:placeholder="Temperatura zasilania" class="form-control"></br>
-            <p th:errors="*{returnTemp}" style="font-size: 10px" class="alert alert-danger"></p>
-            <input th:field="*{returnTemp}" th:type="text" th:placeholder="Temperatura powrotu" class="form-control"></br>
-            <p th:errors="*{heatingPower}" style="font-size: 10px" class="alert alert-danger"></p>
-            <input th:field="*{heatingPower}" th:type="text" th:placeholder="'Moc grzewcza w Watach'" class="form-control"></br>
-
-            <input th:type="submit" value="oblicz" class="btn btn-primary mt-2 float-center">
-          </div>
+        <form th:action="@{/calculator/getRadiators}" th:method="get" th:object="${radiator}">
+          <table>
+            <thead>
+            <tr>
+              <th> Radiator Name </th>
+              <th> Heating Power </th>
+              <th> Height </th>
+              <th> Length </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${radiators.empty}">
+              <td colspan="2"> No Radiators Available </td>
+            </tr>
+            <tr th:each="radiator : ${radiators}">
+              <td><span th:text="${radiator.radiatorName}"> Radiator Name </span></td>
+              <td><span th:text="${radiator.heatingPower}"> Heating Power </span></td>
+              <td><span th:text="${radiator.height}"> Height </span></td>
+              <td><span th:text="${radiator.length}"> Length </span></td>
+            </tr>
+            </tbody>
+          </table>
         </form>
         <hr>
 

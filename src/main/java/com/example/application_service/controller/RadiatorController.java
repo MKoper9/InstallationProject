@@ -18,8 +18,9 @@ public class RadiatorController {
     }
 
     @PostMapping(path = "/addRadiator")
-    public Boolean addRadiator(@RequestParam(defaultValue = "test") String radiatorName, @RequestParam(defaultValue = "") Integer heatingPower) {
-        return radiatorService.addRadiator(new Radiator(radiatorName, heatingPower));
+    public Boolean addRadiator(@RequestParam(defaultValue = "test") String radiatorName, @RequestParam(defaultValue = "") Integer heatingPower, Double height
+            , Double lenght) {
+        return radiatorService.addRadiator(new Radiator(radiatorName, heatingPower,height,lenght));
     }
 
     @GetMapping(path = "/radiators")
