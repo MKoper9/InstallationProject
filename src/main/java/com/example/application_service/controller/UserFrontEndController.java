@@ -52,7 +52,7 @@ public class UserFrontEndController {
         model.addAttribute("radiator", radiatorService.getAllRadiatorsOrderByPublicationDateDesc());
         model.addAttribute("isAdmin", userService.hasRole(auth, "ROLE_ADMIN"));
         model.addAttribute("isCompany", userService.hasRole(auth, "ROLE_COMPANY"));
-        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails) auth.getPrincipal()).getUsername() : "");
 
         return "index";
     }
@@ -63,6 +63,7 @@ public class UserFrontEndController {
         model.addAttribute("user", new User()); // give to Thymeleaf resolver object User
         return "registration";
     }
+
     /*
     "BindingResult"
     General interface that represents binding results.
@@ -83,11 +84,23 @@ public class UserFrontEndController {
         return "index";
     }
 
-    @GetMapping("/calculator/getRadiators")
-    public String calculator(Integer flowTemperature, Integer returnTemperature, Model model){
+    @PostMapping("/radiators")
+    public String radiatorsResult(@ModelAttribute("higherPower") Integer flowTemperature, @ModelAttribute("lowerPower")Integer returnTemperature, Model model) {
 
-        model.addAttribute("radiators", radiatorService.findRadiatorByHeatingPower(flowTemperature,returnTemperature));
+        List<Radiator>radiators=radiatorService.findRadiatorByHeatingPower(flowTemperature, returnTemperature);
+        model.addAttribute("radiators", radiators);
 
-        return "calculator";
+        return "radiatorsResult";
+    }
+
+    @PostMapping("/radiators")
+    public String radiatorsInput(Model model, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "error";
+        }
+
+        model.addAttribute("higherPower", null);
+
+        return "radiatorsResult";
     }
 }
