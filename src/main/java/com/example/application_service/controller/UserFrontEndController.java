@@ -84,23 +84,13 @@ public class UserFrontEndController {
         return "index";
     }
 
-    @PostMapping("/radiators")
-    public String radiatorsResult(@ModelAttribute("higherPower") Integer flowTemperature, @ModelAttribute("lowerPower")Integer returnTemperature, Model model) {
+@GetMapping("/radiatorsTable")
+    public String radiators(Model model){
 
-        List<Radiator>radiators=radiatorService.findRadiatorByHeatingPower(flowTemperature, returnTemperature);
-        model.addAttribute("radiators", radiators);
+        model.addAttribute("radiator", radiatorService.getAllRadiators());
+        return "radiatorsTable";
+}
 
-        return "radiatorsResult";
-    }
 
-    @PostMapping("/radiators")
-    public String radiatorsInput(Model model, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "error";
-        }
 
-        model.addAttribute("higherPower", null);
-
-        return "radiatorsResult";
-    }
 }

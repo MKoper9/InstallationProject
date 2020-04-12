@@ -25,6 +25,8 @@ public class Radiator {
     private Double height;
     @Column(name = "lenght")
     private Double lenght;
+    @Column(name="material")
+    private String material;
 
     public Radiator(String radiatorName, Integer heatingPower, Double height, Double lenght) {
         this.radiatorName = radiatorName;
