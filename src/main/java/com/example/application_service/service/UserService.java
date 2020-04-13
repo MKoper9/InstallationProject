@@ -1,5 +1,6 @@
 package com.example.application_service.service;
 
+
 import com.example.application_service.model.Role;
 import com.example.application_service.model.User;
 import com.example.application_service.repository.RadiatorRepository;
@@ -8,16 +9,18 @@ import com.example.application_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -42,6 +45,13 @@ public class UserService {
         if (userRepository.findAll().stream().anyMatch(u -> u.getEmail().equals(user.getEmail()))) {
             return false;
         } else {
+            user.setRegistrationDate(LocalDateTime.now());
+            if(user.getCompanyNip().equals("")){
+                user.setRoles(new HashSet<>(Arrays.asList(roleRepository.findFirstByRoleName("ROLE_USER"))));
+            }else {
+                user.setRoles(new HashSet<>(Arrays.asList(roleRepository.findFirstByRoleName("ROLE_COMPANY"))));
+            }
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);      // INSERT INTO USER
             return true;
         }

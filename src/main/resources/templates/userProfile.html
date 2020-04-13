@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th=”http://www.thymeleaf.org”>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Panel użytkownika</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav th:replace="fragments/navbar :: navbar"></nav>
+<!-- Page Header -->
+<header th:replace="fragments/header :: header(title='PANEL UŻYTKOWNIKA', subtitle='Twój panel użytkownika')"></header>
+
+<!-- Main Content -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Moje dane</h6>
+                </div>
+                <div class="card-body" >
+                    <p th:text="${'Imię: ' + user.name}"> name </p>
+                    <p th:text="${'Nazwisko: ' + user.lastName}"> lastname </p>
+                    <p th:text="${'E-mail: ' + user.email}"> email </p>
+                    <p th:text="${'Data rejestracji: ' + user.registrationDate}"> registration_date </p>
+                    <p> Uprawnienia </p>
+                    <ul>
+                        <li th:each="r : ${roleList}" th:text="${r.getRoleName()}"> rola </li>
+                    </ul>
+
+                    <p id="sh" class="fas fa-user-edit"> edytuj dane </p>
+                    <a id="ukryty_tekst">
+                        <h5>możesz edytować dowolne dane</h5>
+                        <form th:action="@{/updateUserData}" th:method="post" th:object="${user}">
+                            <div class="form-group">
+                                <input th:field="*{userId}" hidden>
+                                <p th:errors="*{name}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{name}" th:type="text" th:placeholder="imię" class="form-control"></br>
+                                <p th:errors="*{lastName}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{lastName}" th:type="text" th:placeholder="nazwisko" class="form-control"></br>
+                                <p th:errors="*{password}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{password}" th:type="password" th:placeholder="hasło" class="form-control"></br>
+                                <p th:errors="*{companyName}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{companyName}" th:type="text" th:placeholder="'nazwa firmy - nieobowiązkowe'" class="form-control"></br>
+                                <p th:errors="*{companyAddress}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{companyAddress}" th:type="text" th:placeholder="'adres firmy - nieobowiązkowe'" class="form-control"></br>
+                                <p th:errors="*{companyNip}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{companyNip}" th:type="text" th:placeholder="'nip firmy - nieobowiązkowe'" class="form-control"></br>
+
+                                <input th:type="submit" value="zaktualizuj" class="btn btn-primary mt-2 float-center">
+                            </div>
+                        </form>
+                    </a>
+                    <script>
+                        var a = document.getElementById('ukryty_tekst');
+                        a.style.display = 'none';
+                        document.getElementById('sh').innerHTML = 'edytuj dane';
+                        document.getElementById('sh').onclick = function()
+                        {
+                            if(a.style.display == 'none') {
+                                a.style.display = 'block';
+                                this.innerHTML = 'zminimalizuj';
+                            } else {
+                                a.style.display = 'none';
+                                this.innerHTML = 'edytuj dane';
+                            }
+                        };
+                    </script>
+                </div>
+            </div>
+
+
+<!--            <div class="card shadow mb-4">-->
+<!--                <div class="card-header py-3">-->
+<!--                    <h6 class="m-0 font-weight-bold text-primary">Moje zamówienia</h6>-->
+<!--                </div>-->
+<!--                <div class="card-body">-->
+<!--                    <div class="table-responsive">-->
+<!--                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th>Zamówienie</th>-->
+<!--                                <th>Firma</th>-->
+<!--                                <th>Cena</th>-->
+<!--                                <th>Data zamówienia</th>-->
+<!--                                <th>Data realizacji</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr th:each="b : ${baskets}">-->
+<!--                                <td th:text="${b.getTask().getContent()}">Zamówienie</td>-->
+<!--                                <td th:text="${b.getUser().getCompanyName()}">Firma</td>-->
+<!--                                <td th:text="${#numbers.formatDecimal(b.getTask().getPrice(),1,2) + ' PLN'}">Cena</td>-->
+<!--                                <td th:text="${#temporals.format(b.getBasketStart(), 'dd-MM-yyyy')}">Data zamówienia</td>-->
+<!--                                <td th:text="${b.getBasketDeadline()+' '}">Data realizacji</td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
+
+<!--<p th:if="${info != null}" th:text="${info}" class="alert-info"> info </p>-->
+<!--<div class="post-preview" th:each="task : ${tasks}">-->
+<!--<div th:if="${task.getStatus()}">-->
+<!--<a th:href="@{'tasks&'+${task.getTaskId()}}">-->
+<!--<h2 class="post-title" th:text="${task.getContent()}">-->
+<!--content-->
+<!--</h2>-->
+<!--<h3 class="post-subtitle" th:text="${#numbers.formatDecimal(task.getPrice(),1,2)}+' PLN'">-->
+<!--price-->
+<!--</h3>-->
+<!--</a>-->
+<!--<p th:text="${'Autor: '+task.getUser().getName()+' '+task.getUser().getLastName()}"-->
+<!--class="post-meta">-->
+<!--task owner-->
+<!--</p>-->
+<!--&lt;!&ndash;<div class="clearfix">&ndash;&gt;-->
+<!--<a th:if="${isLogged && isAdmin}" style="color: red" class="fas fa-trash"-->
+<!--th:href="@{'/delete_task&'+${task.getTaskId()}}"></a>-->
+<!--<a th:if="${isLogged && !isAdmin && isCompany && task.getUser().getEmail().equals(loggedEmail)}" class="fas fa-trash"-->
+<!--th:href="@{'/delete_task&'+${task.getTaskId()}}"></a>-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--<hr>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<hr>-->
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

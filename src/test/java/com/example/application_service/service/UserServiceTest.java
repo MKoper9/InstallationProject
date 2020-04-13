@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,8 +22,8 @@ class UserServiceTest {
     @InjectMocks
     UserService userService;
 
-    User user = new User("name", "lastName", "email", "password", LocalDateTime.now(), true);
-    User user1 = new User("name1", "lastName1", "email1", "password1", LocalDateTime.now(), true);
+    User user = new User("name", "lastName", "email", "password", LocalDateTime.now(), true, new ArrayList<>());
+    User user1 = new User("name1", "lastName1", "email1", "password1", LocalDateTime.now(), true, new ArrayList<>());
 
 
     @Test

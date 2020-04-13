@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,11 +46,11 @@ public class UserController {
                             @RequestParam String password, String companyName, String companyAddress, String nip) {
         if (nip == null) {
             return userService.register(
-                    new User(name, lastName, email, password, LocalDateTime.now(), true)
+                    new User(name, lastName, email, password, LocalDateTime.now(), true, new ArrayList<>())
             );
         }
         return userService.register(
-                new User(name, lastName, email, password, companyName, companyAddress, nip, true, LocalDateTime.now())
+                new User(name, lastName, email, password, companyName, companyAddress, nip, true, LocalDateTime.now(), new ArrayList<>())
         );
     }
 
