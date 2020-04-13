@@ -14,12 +14,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    DataSource dataSource;
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/addRadiator").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY")
@@ -40,15 +34,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .logoutSuccessUrl("/");
     }
 
+    @Autowired
+    DataSource dataSource;
+    @Autowired
+    PasswdEncoder passwdEncoder;
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .jdbcAuthentication()
-                    .usersByUsernameQuery("SELECT u.email, u.password, status FROM user u WHERE u.email=?")
-                    .authoritiesByUsernameQuery(
-                            "SELECT u.email, r.role_name FROM user u Join user_role ur ON (u.user_id=ur.user_id)"+
-                            "JOIN role r r ON (r.role_id = ur.role_id) WHERE u.email=?")
+                .usersByUsernameQuery("SELECT u.email, u.password, status FROM user u WHERE u.email = ?") // wyszukanie użytkownika po adresie email
+                .authoritiesByUsernameQuery(
+                        "SELECT u.email, r.role_name FROM user u JOIN user_role ur ON (u.user_id = ur.user_id) " +
+                                "JOIN role r ON (r.role_id = ur.role_id) WHERE u.email = ?")
                 .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder.getPasswordEncoder());
+                .passwordEncoder(passwdEncoder.getPasswordEncoder());       // matoda zwracająca algorytm BCryptPasswordEncoder
     }
 
 }

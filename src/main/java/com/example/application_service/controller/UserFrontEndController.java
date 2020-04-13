@@ -71,7 +71,8 @@ public class UserFrontEndController {
     a Validator to be applied, and adds binding-specific analysis and model building.
      */
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+    public String registration(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model, Authentication auth)
+    {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
@@ -81,6 +82,12 @@ public class UserFrontEndController {
             model.addAttribute("isUniqueEmail", "adres" + user.getEmail() + " już istnieje w bazie danych");
             return "registration";
         }
+        model.addAttribute("loggedEmail",auth!=null? ((UserDetails)auth.getPrincipal()).getUsername() : "");
+        model.addAttribute("isLogged", auth!=null);
+        model.addAttribute("radiators", radiatorService.getAllRadiatorsOrderByPublicationDateDesc());
+        model.addAttribute("isAdmin", userService.hasRole(auth,"ROLE_ADMIN"));
+        model.addAttribute("isCompany", userService.hasRole(auth,"ROLE_COMPANY"));
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");
         return "index";
     }
 
