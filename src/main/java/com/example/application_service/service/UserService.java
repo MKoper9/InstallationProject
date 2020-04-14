@@ -165,4 +165,18 @@ public class UserService {
         return principal.getAuthorities().stream().anyMatch(o -> o.getAuthority().equals(roleName));
     }
 
+    public void updateUser(User user){
+        Optional<User> userOpt = userRepository.findById(user.getUserId());
+        if(userOpt.isPresent()){
+            User updateUser = userOpt.get();
+            updateUser.setName(user.getName());
+            updateUser.setLastName(user.getLastName());
+            updateUser.setPassword(user.getPassword());
+            updateUser.setCompanyName(user.getCompanyName());
+            updateUser.setCompanyAddress(user.getCompanyAddress());
+            updateUser.setCompanyNip(user.getCompanyNip());
+            userRepository.save(updateUser);
+        }
+    }
+
 }

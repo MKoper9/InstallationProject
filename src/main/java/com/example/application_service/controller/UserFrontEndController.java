@@ -108,12 +108,36 @@ public class UserFrontEndController {
                 return "userProfile";
     }
 
+    @PostMapping("/updateUserData")
+    public String updateUserData(
+            @ModelAttribute @Valid User user, BindingResult bindingResult,
+            Authentication auth,
+            Model model){
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
+        model.addAttribute("isLogged", auth != null);
+        model.addAttribute("radiators", radiatorService.getAllRadiatorsOrderByPublicationDateDesc());
+        model.addAttribute("isAdmin", userService.hasRole(auth, "ROLE_ADMIN"));         // do sprawdzania uprawnień R_A
+        model.addAttribute("isCompany", userService.hasRole(auth, "ROLE_COMPANY"));     // do sprawdzania uprawnień R_C
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");
+        model.addAttribute("user", auth != null ? userService.getUserByEmail(((UserDetails)auth.getPrincipal()).getUsername()) : "");
+        model.addAttribute("roleList",
+                auth != null ?
+                        new ArrayList<>(userService.getUserByEmail(((UserDetails)auth.getPrincipal()).getUsername()).getRoles()) :
+                        new ArrayList<>());
+        if(bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError.getDefaultMessage()));
+            return "userProfile";
+        }
+        // aktualizacja
+        userService.updateUser(user);
+        return "redirect:/userProfile";
+    }
 
 @GetMapping("/radiatorsList")
     public String radiators(Model model){
 
         model.addAttribute("radiator", radiatorService.getAllRadiators());
-        return "radiatorsList";
+        return "radiators-list";
 }
 
 
