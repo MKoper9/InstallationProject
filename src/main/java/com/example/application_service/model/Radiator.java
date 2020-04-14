@@ -28,7 +28,12 @@ public class Radiator {
     @Column(name="material")
     private String material;
 
-    public Radiator(String radiatorName, Integer heatingPower, Double height, Double lenght) {
+    @ManyToOne
+    @JoinColumn(name = "producer_id")
+    private Producer producer;
+
+
+    public Radiator(String radiatorName, Integer heatingPower, Double height, Double lenght, Producer producer) {
         this.radiatorName = radiatorName;
         if(height>0){
             this.height=height;
@@ -45,5 +50,7 @@ public class Radiator {
         }else {
             throw new IllegalArgumentException("heating power must be over than 0");
         }
+
+        this.producer=producer;
     }
 }

@@ -13,12 +13,16 @@ class RadiatorTest {
     @Test
     void radiatorConstructorReturnException() {
         //given
+        Producer producer = new Producer();
         //when
         //then
         assertAll(
-                ()->assertThrows(IllegalArgumentException.class, () -> new Radiator("CV11-90/1,0",-1000,1.0,0.9)),
-                ()->assertThrows(IllegalArgumentException.class, () -> new Radiator("CV11-90/1,0",1000,-1.0,0.9)),
-                ()->assertThrows(IllegalArgumentException.class, () -> new Radiator("CV11-90/1,0",1000,1.0,-0.9))
+                ()->assertThrows(IllegalArgumentException.class, () ->
+                        new Radiator("CV11-90/1,0",-1000,1.0,0.9, producer)),
+                ()->assertThrows(IllegalArgumentException.class, () ->
+                        new Radiator("CV11-90/1,0",1000,-1.0,0.9, producer)),
+                ()->assertThrows(IllegalArgumentException.class, () ->
+                        new Radiator("CV11-90/1,0",1000,1.0,-0.9, producer))
         );
     }
 }
